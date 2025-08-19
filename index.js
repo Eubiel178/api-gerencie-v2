@@ -50,8 +50,9 @@ app.use(subscriptionControl);
 const SubscriptionModel = require("./src/models/subscription.model");
 const cron = require("node-cron");
 
-// exemplo: enviar notificações de lembretes do dia
-async function sendDailyReminders() {
+// roda a cada minuto
+cron.schedule("* * * * *", async () => {
+  console.log("🔔 Checando lembretes do dia...");
   const hojeStr = new Date().toISOString().slice(0, 10);
 
   const lembretes = await ReminderModel.find({
@@ -83,12 +84,6 @@ async function sendDailyReminders() {
       }
     }
   }
-}
-
-// roda a cada minuto
-cron.schedule("* * * * *", async () => {
-  console.log("🔔 Checando lembretes do dia...");
-  await sendDailyReminders();
 });
 
 app.listen(PORT, LOCAL_ADDRESS, () => {

@@ -41,19 +41,6 @@ router.patch("/list/task-id/:id", async (request, response) => {
   }
 });
 
-router.put("/list/task-id/:id", async (request, response) => {
-  try {
-    const { id } = request.params;
-    const { body } = request;
-
-    const task = await TaskModel.findByIdAndUpdate(id, body);
-
-    response.status(200).json({ status: "OK" });
-  } catch (error) {
-    response.status(500).json({ status: "ERROR", error: error });
-  }
-});
-
 router.delete("/list/task-id/:id", async (request, response) => {
   try {
     const { id } = request.params;
