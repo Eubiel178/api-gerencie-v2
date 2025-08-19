@@ -56,21 +56,6 @@ router.post("/authenticate", async (request, response) => {
   }
 });
 
-router.patch("/users/:id", async (request, response) => {
-  response.setHeader("Access-Control-Allow-Origin", "*");
-
-  try {
-    const { id } = request.params;
-    const { body } = request;
-
-    await UserModel.findByIdAndUpdate(id, body);
-
-    response.status(200).json({ status: "OK" });
-  } catch (error) {
-    response.status(500).json({ status: "ERROR", errorMessage: error.msg });
-  }
-});
-
 router.get("/users/:id", async (request, response) => {
   try {
     const user = await UserModel.findById(request.params.id).select(
