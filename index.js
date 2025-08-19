@@ -1,12 +1,9 @@
-// Evita MaxListenersExceededWarning
 require("events").EventEmitter.defaultMaxListeners = 20;
 
 const express = require("express");
 const cors = require("cors");
 const { config } = require("dotenv");
 const http = require("http");
-// const { Server } = require("socket.io");
-// const cron = require("node-cron");
 
 const connectToDatabase = require("./src/database/connect");
 const ReminderModel = require("./src/models/reminder.model");
@@ -21,17 +18,7 @@ config();
 const { PORT = 4000, LOCAL_ADDRESS = "0.0.0.0" } = process.env;
 
 const app = express();
-const server = http.createServer(app); // unifica API e Socket.IO
 
-// // Socket.IO
-// const io = new Server(server, {
-//   cors: {
-//     origin: "*",
-//     methods: ["GET", "POST"],
-//   },
-// });
-
-// Middleware
 const corsOptions = {
   origin: "*",
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
@@ -104,6 +91,6 @@ cron.schedule("* * * * *", async () => {
   await sendDailyReminders();
 });
 
-server.listen(PORT, LOCAL_ADDRESS, () => {
+app.listen(PORT, LOCAL_ADDRESS, () => {
   console.log(`🟢 Servidor rodando em http://${LOCAL_ADDRESS}:${PORT}`);
 });
