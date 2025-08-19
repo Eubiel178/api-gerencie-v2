@@ -89,16 +89,4 @@ router.get("/users/:id", async (request, response) => {
   }
 });
 
-router.delete("/users/:id", async (request, response) => {
-  try {
-    const { id } = request.params;
-
-    const user = await UserModel.findByIdAndDelete(id);
-
-    response.status(200).json({ status: "OK" });
-  } catch (error) {
-    response.status(500).json({ status: "ERROR", errorMessage: error.msg });
-  }
-});
-
 module.exports = router;
